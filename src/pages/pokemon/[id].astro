@@ -4,6 +4,7 @@ import { API_URL } from "../../../consts";
 import Layout from "@layouts/Layout.astro";
 import type { PokemonListResponse } from "@interfaces/pokemon-list-response";
 import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import { getPokemonAudio, getPokemonId } from "@utils/pokemon-resources";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 
@@ -11,7 +12,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { results } = await response.json() as PokemonListResponse;
  
   return results.map((pokemon) => {
-    const id = pokemon.url.split('/').at(-2);
+    const id = getPokemonId(pokemon.url);
     return {
       params: { id },
       props: { name: pokemon.name, url: pokemon.url },
@@ -27,7 +28,7 @@ interface Props {
 const { id } = Astro.params;
 const { name, url } = Astro.props;
 
-const audioSource = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+const audioSource = getPokemonAudio(id as string);
 
 ---
 <Layout title="Pokemon">

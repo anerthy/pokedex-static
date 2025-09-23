@@ -5,6 +5,8 @@ import Layout from "@layouts/Layout.astro";
 import { API_URL } from "../../../consts";
 import PokemonCard from "@components/pokemons/PokemonCard.astro";
 import type { PokemonListResponse } from "@interfaces/pokemon-list-response";
+import { getPokemonAudio, getPokemonId } from "@utils/pokemon-resources";
+import { getPokemonImage } from "@utils/pokemon-resources";
 
 interface Props {
   url: string;
@@ -27,12 +29,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const { name } = Astro.params;
 const { url } = Astro.props;
 
-const id = url.split('/').at(-2);
+const id = getPokemonId(url);
 
-const audioSource = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
-
+const audioSource = getPokemonAudio(id as string);
+const imageSource = getPokemonImage(id as string);
 ---
-<Layout title={`Pokemon Detail of ${name}`}>
+<Layout 
+  title={`Pokemon number ${id} - ${name}`}
+  description={`Details and cry of ${name}`}
+  image={imageSource}
+/>
+>
 
   <section
     class="mt-10 mx-10 flex flex-col justify-center items-center"

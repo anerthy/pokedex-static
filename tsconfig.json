@@ -9,6 +9,7 @@
       "@layouts/*": ["./src/layouts/*"],
       "@interfaces/*": ["./src/interfaces/*"],
       "@styles/*": ["./src/styles/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   }
 }
