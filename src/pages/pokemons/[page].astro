@@ -1,9 +1,9 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { API_URL } from "../../../consts";
-import PokemonCard from "../../components/pokemons/PokemonCard.astro";
-import type { PokemonListResponse } from "../../interfaces/pokemon-list-response";
-import Layout from "../../layouts/Layout.astro";
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list-response";
+import Layout from "@layouts/Layout.astro";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 

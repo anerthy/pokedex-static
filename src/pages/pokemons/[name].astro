@@ -1,10 +1,10 @@
 ---
 import type { GetStaticPaths } from "astro";
-import Layout from "../../layouts/Layout.astro";
+import Layout from "@layouts/Layout.astro";
 
 import { API_URL } from "../../../consts";
-import PokemonCard from "../../components/pokemons/PokemonCard.astro";
-import type { PokemonListResponse } from "../../interfaces/pokemon-list-response";
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list-response";
 
 interface Props {
   url: string;
