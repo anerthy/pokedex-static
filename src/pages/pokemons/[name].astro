@@ -1,0 +1,68 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import PokemonCard from "../../components/pokemons/PokemonCard.astro";
+
+interface Props {
+  url: string;
+}
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return [
+    { 
+      params: { name: "pikachu" }, 
+      props: {
+        name: "pikachu",
+        url: "https://pokeapi.co/api/v2/pokemon/25/"
+      } 
+    },
+    { 
+      params: { name: "bulbasaur" }, 
+      props: {
+        name: "bulbasaur",
+        url: "https://pokeapi.co/api/v2/pokemon/1/"
+      } 
+    },
+    { 
+      params: { name: "charmander" }, 
+      props: {
+        name: "charmander",
+        url: "https://pokeapi.co/api/v2/pokemon/4/"
+      } 
+    },
+    { 
+      params: { name: "squirtle" }, 
+      props: {
+        name: "squirtle",
+        url: "https://pokeapi.co/api/v2/pokemon/7/"
+      } 
+    },
+  ];
+}
+
+const { name } = Astro.params;
+const { url } = Astro.props;
+
+const id = url.split('/').at(-2);
+
+const audioSource = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+
+---
+<Layout title={`Pokemon Detail of ${name}`}>
+
+  <section
+    class="mt-10 mx-10 flex flex-col justify-center items-center"
+  >
+    <a href="/" class="hover:underline text-blue-500">Regresar</a>
+    <h1 class="text-3xl capitalize">{name}</h1>
+
+    <PokemonCard name={name} url={url} />
+    
+    <audio controls class="mt-5">
+      <source src={audioSource} type="audio/ogg" />
+      Your browser does not support the audio element.
+    </audio>
+
+  </section>
+
+</Layout>  
