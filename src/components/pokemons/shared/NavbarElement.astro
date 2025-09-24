@@ -1,0 +1,21 @@
+---
+const { url, name } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const isActive = currentPath === url;
+---
+<div class="">
+  <a 
+    href={url} 
+    class="text-gray-800 dark:text-gray-200 mx-1.5 sm:mx-6"
+  >
+    {name}
+  </a>
+  {
+    isActive ? (
+      <div transition:name="menu-line" class="border-b-2 border-blue-500 mx-4"></div>
+    ) : (
+      <div class="border-b-2 border-transparent"></div>
+    )
+  }
+</div>

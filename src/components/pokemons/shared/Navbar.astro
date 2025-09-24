@@ -1,0 +1,20 @@
+---
+import NavbarElement from "./NavbarElement.astro";
+
+
+const links = [
+    { url: "/", name: "Home" },
+    { url: "/pokemons/1", name: "Paginados" },
+    { url: "/favorites", name: "Favorites" },
+];
+
+---
+
+<nav class="bg-slate-900 text-slate-100">
+    <div class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300">
+       {
+        links.map(link => <NavbarElement url={link.url} name={link.name}/>)
+       }
+        <!-- <a href="#" class="text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6">home</a> -->
+    </div>
+</nav>

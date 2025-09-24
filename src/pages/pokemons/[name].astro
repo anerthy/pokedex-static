@@ -7,6 +7,7 @@ import PokemonCard from "@components/pokemons/PokemonCard.astro";
 import type { PokemonListResponse } from "@interfaces/pokemon-list-response";
 import { getPokemonAudio, getPokemonId } from "@utils/pokemon-resources";
 import { getPokemonImage } from "@utils/pokemon-resources";
+import Title from "@components/pokemons/shared/Title.astro";
 
 interface Props {
   url: string;
@@ -43,8 +44,12 @@ const imageSource = getPokemonImage(id as string);
   <section
     class="mt-10 mx-10 flex flex-col justify-center items-center"
   >
-    <a href="/" class="hover:underline text-blue-500">Regresar</a>
-    <h1 class="text-3xl capitalize">{name}</h1>
+    <button 
+      onclick="history.back()"  
+      class="hover:underline text-blue-500">
+      Regresar
+    </button>
+    <Title>{name}</Title>
 
     <PokemonCard name={name as string} url={url} isBig />
     
