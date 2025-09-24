@@ -10,7 +10,7 @@ const response = await fetch(API_URL);
 const data = (await response.json()) as PokemonListResponse;
 ---
 
-<Layout title={title}>
+<Layout title={title} image='/pokeball.png'>
 	<h1 class="text-3xl ">Listado de Pokemon</h1>
 
 	<section 
