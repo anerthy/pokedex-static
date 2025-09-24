@@ -9,6 +9,8 @@ import { getPokemonAudio, getPokemonId } from "@utils/pokemon-resources";
 import { getPokemonImage } from "@utils/pokemon-resources";
 import Title from "@components/pokemons/shared/Title.astro";
 
+import {Icon} from "astro-icon/components";
+
 interface Props {
   url: string;
 }
@@ -44,12 +46,25 @@ const imageSource = getPokemonImage(id as string);
   <section
     class="mt-10 mx-10 flex flex-col justify-center items-center"
   >
-    <button 
+   <div class="flex flex-row">
+    <div>
+     <button 
       onclick="history.back()"  
       class="hover:underline text-blue-500">
       Regresar
     </button>
     <Title>{name}</Title>
+   </div>
+   <button 
+    id="favorite-button" 
+    class="ml-4"
+    data-name={name}
+    data-id={id}
+    >
+    <Icon name="heart-outline" size={50}/>
+    <Icon name="heart-full" size={50} class="hidden"/>
+   </button>
+   </div>
 
     <PokemonCard name={name as string} url={url} isBig />
     
@@ -61,3 +76,35 @@ const imageSource = getPokemonImage(id as string);
   </section>
 
 </Layout>  
+
+<script>
+  interface FavoritePokemons {
+    name: string;
+    id: string;
+  };
+
+
+  document.addEventListener('astro:page-load',()=>{ //  sino solo se carga una vez por el ClientRouter
+
+    const favoriteButton = document.getElementById('favorite-button') as HTMLButtonElement;
+  
+    if (!favoriteButton) return;
+
+    const name = favoriteButton.dataset.name;
+    const id = favoriteButton.dataset.id;
+    
+    favoriteButton.addEventListener('click', ()=>{
+      console.log({ name, id });
+    });
+
+  });
+
+
+</script>
+
+<style>
+  @reference "../../styles/global.css";
+  #favorite-button {
+    @apply hover:animate-pulse;
+  }
+</style>
