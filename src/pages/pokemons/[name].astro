@@ -61,8 +61,8 @@ const imageSource = getPokemonImage(id as string);
     data-name={name}
     data-id={id}
     >
-    <Icon name="heart-outline" size={50}/>
-    <Icon name="heart-full" size={50} class="hidden"/>
+    <Icon id="heart-outline" name="heart-outline" size={50}/>
+    <Icon id="heart-full" name="heart-full" size={50} class="hidden"/>
    </button>
    </div>
 
@@ -80,24 +80,72 @@ const imageSource = getPokemonImage(id as string);
 <script>
   interface FavoritePokemons {
     name: string;
-    id: string;
+    id: number;
   };
 
+  // document.addEventListener('astro:before-preparation',() => {
+  //   console.log('astro:before-preparation');
+  // });
 
-  document.addEventListener('astro:page-load',()=>{ //  sino solo se carga una vez por el ClientRouter
+  // document.addEventListener('astro:after-preparation',() => {
+  //   console.log('astro:after-preparation');
+  // });
+
+  // document.addEventListener('astro:before-swap',() => {
+  //   console.log('astro:before-swap');
+  // });
+
+  // document.addEventListener('astro:after-swap',() => {
+  //   console.log('astro:after-swap');
+  // });
+
+  const handlePageLoad = ()=>{
+    
+    let favoritePokemons: FavoritePokemons[] = JSON.parse(
+      localStorage.getItem('favoritePokemons') || '[]'
+    );
 
     const favoriteButton = document.getElementById('favorite-button') as HTMLButtonElement;
   
     if (!favoriteButton) return;
 
-    const name = favoriteButton.dataset.name;
-    const id = favoriteButton.dataset.id;
-    
-    favoriteButton.addEventListener('click', ()=>{
-      console.log({ name, id });
-    });
+    const name = favoriteButton.dataset.name as string || '';
+    const id = favoriteButton.dataset.id as string || '';
+    const isFavorite = favoritePokemons.some(pokemon => pokemon.name === name);
 
-  });
+    const heartOutline = favoriteButton.querySelector('#heart-outline') as HTMLElement;
+    const heartFull = favoriteButton.querySelector('#heart-full') as HTMLElement;
+
+    if (isFavorite){
+      heartOutline.classList.add('hidden');
+      heartFull.classList.remove('hidden');
+    } else{
+      heartOutline.classList.remove('hidden');
+      heartFull.classList.add('hidden');
+    }
+
+     const toggleFavoritePokemon = () => {
+
+      if (isFavorite){
+        favoritePokemons = favoritePokemons.filter(pokemon => pokemon.name !== name);
+      } else{
+        favoritePokemons.push({ name: name, id: +id });
+      }
+
+      localStorage.setItem('favoritePokemons', JSON.stringify(favoritePokemons));
+    };
+    
+
+    favoriteButton.addEventListener('click', () => {
+      heartOutline.classList.toggle('hidden');
+      heartFull.classList.toggle('hidden');
+
+      toggleFavoritePokemon();
+
+    });
+  };
+
+  document.addEventListener('astro:page-load', handlePageLoad);
 
 
 </script>
