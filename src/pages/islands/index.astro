@@ -1,0 +1,19 @@
+---
+import { Counter } from "@components/Counter";
+import Title from "@components/pokemons/shared/Title.astro";
+import Layout from "@layouts/Layout.astro";
+
+
+const counterValue = 29;
+
+---
+<Layout title="Island SolidJs">
+    <Counter 
+        client:load 
+        initialValue={counterValue}
+        transition:persist="counter" 
+        transition:persist-props
+    >
+        <Title>Island SolidJs</Title>
+    </Counter>
+</Layout>

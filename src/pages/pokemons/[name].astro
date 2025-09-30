@@ -78,14 +78,13 @@ const imageSource = getPokemonImage(id as string);
 </Layout>  
 
 <script>
-  interface FavoritePokemons {
-    name: string;
-    id: number;
-  };
 
+  import type { FavoritePokemon } from "@interfaces/favorite-pokemon";
+  
   // document.addEventListener('astro:before-preparation',() => {
   //   console.log('astro:before-preparation');
   // });
+
 
   // document.addEventListener('astro:after-preparation',() => {
   //   console.log('astro:after-preparation');
@@ -101,7 +100,7 @@ const imageSource = getPokemonImage(id as string);
 
   const handlePageLoad = ()=>{
     
-    let favoritePokemons: FavoritePokemons[] = JSON.parse(
+    let favoritePokemons: FavoritePokemon[] = JSON.parse(
       localStorage.getItem('favoritePokemons') || '[]'
     );
 

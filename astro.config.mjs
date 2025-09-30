@@ -7,6 +7,8 @@ import vercel from '@astrojs/vercel';
 
 import icon from 'astro-icon';
 
+import solidJs from '@astrojs/solid-js';
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -14,5 +16,5 @@ export default defineConfig({
   },
 
   adapter: vercel(),
-  integrations: [icon()]
+  integrations: [icon(), solidJs()]
 });
